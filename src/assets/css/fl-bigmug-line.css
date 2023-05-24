@@ -1,0 +1,37 @@
+/**
+ * Title:  Bigmug Line Flaticon Pack
+ * Author: Catalin Fertu
+ * Source: http://www.flaticon.com/packs/bigmug-line
+ * License:  CC BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+ */
+
+
+
+[class^="fl-bigmug-line-"]:before, [class*=" fl-bigmug-line-"]:before,
+[class^="fl-bigmug-line-"]:after, [class*=" fl-bigmug-line-"]:after {   
+	font-family: 'fl-bigmug-line';
+    font-size: inherit;
+	font-weight: 400;
+	font-style: normal;
+	/* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.fl-bigmug-line-airplane86:before {
+	content: "\e003";
+}
+.fl-bigmug-line-big104:before {
+	content: "\e00b";
+}
+.fl-bigmug-line-clipboard68:before {
+	content: "\e01d";
+}
+.fl-bigmug-line-portfolio23:before {
+	content: "\e08a";
+}
+.fl-bigmug-line-user143:before {
+	content: "\e0d0";
+}
+.fl-bigmug-line-user144:before {
+	content: "\e0d1";
+}
