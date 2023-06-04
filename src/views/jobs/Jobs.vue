@@ -70,6 +70,8 @@
       </div>
     </div>
   </div>
+<!--   end of 1st component(search bar and top panel) -->
+
   <div class="site-section bg-light">
     <div class="container">
       <div class="row justify-content-start text-left mb-5">
@@ -77,361 +79,11 @@
           <h2 class="font-weight-bold text-black">Recent Jobs</h2>
         </div>
       </div>
-      <div class="row" data-aos="fade">
-        <div class="col-md-12">
-          <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
-            <div class="mb-4 mb-md-0 mr-5">
-              <div class="job-post-item-header d-flex align-items-center">
-                <h2 class="mr-3 text-black h4">Frontend Development</h2>
-                  <div class="badge-wrap">
-                    <span class="bg-primary text-white badge py-2 px-4">Partime</span>
-                  </div>
-                </div>
-                <div class="job-post-item-body d-block d-md-flex">
-                  <div class="mr-3">
-                    <span class="fl-bigmug-line-portfolio23"></span>
-                    <a href="#">Facebook, Inc.</a>
-                  </div>
-                  <div>
-                    <span class="fl-bigmug-line-big104"></span>
-                    <span>New York City, USA</span>
-                  </div>
-                </div>
-              </div>
-              <div class="ml-auto">
-                <a href="#" class="btn btn-secondary rounded-circle btn-favorite text-gray-500">
-                  <span class="icon-heart"></span>
-                </a>
-                <router-link :to="{ name: 'ApplicationForm' }" class="btn btn-primary py-2">APPLY JOB</router-link>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row" data-aos="fade">
-          <div class="col-md-12">
-            <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
-              <div class="mb-4 mb-md-0 mr-5">
-                <div class="job-post-item-header d-flex align-items-center">
-                  <h2 class="mr-3 text-black h4">Full Stack Developer</h2>
-                  <div class="badge-wrap">
-                    <span class="bg-warning text-white badge py-2 px-4">Full Time</span>
-                  </div>
-                </div>
-                <div class="job-post-item-body d-block d-md-flex">
-                  <div class="mr-3">
-                    <span class="fl-bigmug-line-portfolio23"></span>
-                    <a href="#">Google, Inc.</a>
-                  </div>
-                  <div>
-                    <span class="fl-bigmug-line-big104"></span>
-                    <span>New York City, USA</span>
-                  </div>
-                </div>
-              </div>
-              <div class="ml-auto">
-                <a href="#" class="btn btn-danger rounded-circle btn-favorite active">
-                  <span class="icon-heart"></span>
-                </a>
-                <router-link :to="{ name: 'ApplicationForm' }" class="btn btn-primary py-2">APPLY JOB</router-link>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row" data-aos="fade">
-          <div class="col-md-12">
-            <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
-              <div class="mb-4 mb-md-0 mr-5">
-                <div class="job-post-item-header d-flex align-items-center">
-                  <h2 class="mr-3 text-black h4">Open Source Interactive Developer</h2>
-                <div class="badge-wrap">
-                  <span class="bg-info text-white badge py-2 px-4">Freelance</span>
-                </div>
-              </div>
-              <div class="job-post-item-body d-block d-md-flex">
-                <div class="mr-3"><span class="fl-bigmug-line-portfolio23"></span> <a href="#">New York Times</a></div>
-                  <div>
-                    <span class="fl-bigmug-line-big104"></span>
-                    <span>New York City, USA</span>
-                  </div>
-                </div>
-              </div>
-              <div class="ml-auto">
-                <a href="#" class="btn btn-secondary rounded-circle btn-favorite text-gray-500">
-                  <span class="icon-heart"></span>
-                </a>
-                <router-link :to="{ name: 'ApplicationForm' }" class="btn btn-primary py-2">APPLY JOB</router-link>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row" data-aos="fade">
-          <div class="col-md-12">
-            <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
-              <div class="mb-4 mb-md-0 mr-5">
-                <div class="job-post-item-header d-flex align-items-center">
-                  <h2 class="mr-3 text-black h4">Frontend Development</h2>
-                  <div class="badge-wrap">
-                    <span class="bg-secondary text-white badge py-2 px-4">Internship</span>
-                  </div>
-                </div>
-                <div class="job-post-item-body d-block d-md-flex">
-                  <div class="mr-3">
-                    <span class="fl-bigmug-line-portfolio23"></span>
-                    <a href="#">Facebook, Inc.</a>
-                  </div>
-                  <div>
-                    <span class="fl-bigmug-line-big104"></span>
-                    <span>New York City, USA</span>
-                  </div>
-                </div>
-              </div>
-              <div class="ml-auto">
-                <a href="#" class="btn btn-secondary rounded-circle btn-favorite text-gray-500">
-                  <span class="icon-heart"></span>
-                </a>
-                <router-link :to="{ name: 'ApplicationForm' }" class="btn btn-primary py-2">APPLY JOB</router-link>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row" data-aos="fade">
-          <div class="col-md-12">
-            <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
-              <div class="mb-4 mb-md-0 mr-5">
-                <div class="job-post-item-header d-flex align-items-center">
-                  <h2 class="mr-3 text-black h4">Full Stack Developer</h2>
-                  <div class="badge-wrap">
-                    <span class="bg-warning text-white badge py-2 px-4">Full Time</span>
-                  </div>
-                </div>
-                <div class="job-post-item-body d-block d-md-flex">
-                  <div class="mr-3">
-                    <span class="fl-bigmug-line-portfolio23"></span>  
-                    <a href="#">Google, Inc.</a>
-                  </div>
-                  <div>
-                    <span class="fl-bigmug-line-big104"></span>
-                    <span>New York City, USA</span>
-                  </div>
-                </div>
-              </div>
-              <div class="ml-auto">
-              <a href="#" class="btn btn-secondary rounded-circle btn-favorite text-gray-500">
-                <span class="icon-heart"></span>
-              </a>
-              <router-link :to="{ name: 'ApplicationForm' }" class="btn btn-primary py-2">APPLY JOB</router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row" data-aos="fade">
-        <div class="col-md-12">
-          <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
-            <div class="mb-4 mb-md-0 mr-5">
-              <div class="job-post-item-header d-flex align-items-center">
-                <h2 class="mr-3 text-black h4">Open Source Interactive Developer</h2>
-                <div class="badge-wrap">
-                  <span class="bg-danger text-white badge py-2 px-4">Temporary</span>
-                </div>
-              </div>
-              <div class="job-post-item-body d-block d-md-flex">
-                <div class="mr-3">
-                  <span class="fl-bigmug-line-portfolio23"></span>
-                  <a href="#">New York Times</a>
-                </div>
-                <div>
-                  <span class="fl-bigmug-line-big104"></span>
-                  <span>Kimathi Street, Nairobi</span>
-                </div>
-              </div>
-            </div>
-            <div class="ml-auto">
-              <a href="#" class="btn btn-secondary rounded-circle btn-favorite text-gray-500">
-                <span class="icon-heart"></span>
-              </a>
-              <router-link :to="{ name: 'ApplicationForm' }" class="btn btn-primary py-2">APPLY JOB</router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row" data-aos="fade">
-        <div class="col-md-12">
-          <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
-            <div class="mb-4 mb-md-0 mr-5">
-              <div class="job-post-item-header d-flex align-items-center">
-                <h2 class="mr-3 text-black h4">Frontend Development</h2>
-                <div class="badge-wrap">
-                  <span class="bg-primary text-white badge py-2 px-4">Partime</span>
-                </div>
-              </div>
-              <div class="job-post-item-body d-block d-md-flex">
-                <div class="mr-3">
-                  <span class="fl-bigmug-line-portfolio23"></span>
-                  <a href="#">Facebook, Inc.</a>
-                </div>
-                <div>
-                  <span class="fl-bigmug-line-big104"></span>
-                  <span>New York City, USA</span>
-                </div>
-              </div>
-            </div>
-            <div class="ml-auto">
-              <a href="#" class="btn btn-secondary rounded-circle btn-favorite text-gray-500">
-                <span class="icon-heart"></span>
-              </a>
-              <router-link :to="{ name: 'ApplicationForm' }" class="btn btn-primary py-2">APPLY JOB</router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row" data-aos="fade">
-        <div class="col-md-12">
-          <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
-            <div class="mb-4 mb-md-0 mr-5">
-              <div class="job-post-item-header d-flex align-items-center">
-                <h2 class="mr-3 text-black h4">Full Stack Developer</h2>
-                <div class="badge-wrap">
-                  <span class="bg-warning text-white badge py-2 px-4">Full Time</span>
-                </div>
-              </div>
-              <div class="job-post-item-body d-block d-md-flex">
-                <div class="mr-3">
-                  <span class="fl-bigmug-line-portfolio23"></span>
-                  <a href="#">Google, Inc.</a>
-                </div>
-                <div>
-                  <span class="fl-bigmug-line-big104"></span>
-                  <span>New York City, USA</span>
-                </div>
-              </div>
-            </div>
-            <div class="ml-auto">
-              <a href="#" class="btn btn-secondary rounded-circle btn-favorite text-gray-500"><span class="icon-heart"></span></a>
-              <router-link :to="{ name: 'ApplicationForm' }" class="btn btn-primary py-2">APPLY JOB</router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row" data-aos="fade">
-        <div class="col-md-12">
-          <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
-            <div class="mb-4 mb-md-0 mr-5">
-              <div class="job-post-item-header d-flex align-items-center">
-                <h2 class="mr-3 text-black h4">Open Source Interactive Developer</h2>
-                <div class="badge-wrap">
-                  <span class="bg-info text-white badge py-2 px-4">Freelance</span>
-                </div>
-              </div>
-              <div class="job-post-item-body d-block d-md-flex">
-                <div class="mr-3">
-                  <span class="fl-bigmug-line-portfolio23"></span>
-                  <a href="#">New York Times</a>
-                </div>
-                <div>
-                  <span class="fl-bigmug-line-big104"></span>
-                  <span>New York City, USA</span>
-                </div>
-              </div>
-            </div>
-            <div class="ml-auto">
-              <a href="#" class="btn btn-secondary rounded-circle btn-favorite text-gray-500">
-                <span class="icon-heart"></span>
-              </a>
-              <router-link :to="{ name: 'ApplicationForm' }" class="btn btn-primary py-2">APPLY JOB</router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row" data-aos="fade">
-        <div class="col-md-12">
-          <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
-            <div class="mb-4 mb-md-0 mr-5">
-              <div class="job-post-item-header d-flex align-items-center">
-                <h2 class="mr-3 text-black h4">Frontend Development</h2>
-                <div class="badge-wrap">
-                  <span class="bg-secondary text-white badge py-2 px-4">Internship</span>
-                </div>
-              </div>
-              <div class="job-post-item-body d-block d-md-flex">
-                <div class="mr-3">
-                  <span class="fl-bigmug-line-portfolio23"></span>
-                  <a href="#">Facebook, Inc.</a>
-                </div>
-                <div>
-                  <span class="fl-bigmug-line-big104"></span>
-                  <span>New York City, USA</span>
-                </div>
-              </div>
-            </div>
-            <div class="ml-auto">
-              <a href="#" class="btn btn-secondary rounded-circle btn-favorite text-gray-500">
-                <span class="icon-heart"></span>
-              </a>
-              <router-link :to="{ name: 'ApplicationForm' }" class="btn btn-primary py-2">APPLY JOB</router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row" data-aos="fade">
-        <div class="col-md-12">
-          <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
-            <div class="mb-4 mb-md-0 mr-5">
-              <div class="job-post-item-header d-flex align-items-center">
-                <h2 class="mr-3 text-black h4">Full Stack Developer</h2>
-                <div class="badge-wrap">
-                  <span class="bg-warning text-white badge py-2 px-4">Full Time</span>
-                </div>
-              </div>
-              <div class="job-post-item-body d-block d-md-flex">
-                <div class="mr-3">
-                  <span class="fl-bigmug-line-portfolio23"></span>
-                  <a href="#">Google, Inc.</a>
-                </div>
-                <div>
-                  <span class="fl-bigmug-line-big104"></span>
-                  <span>New York City, USA</span>
-                </div>
-              </div>
-            </div>
-            <div class="ml-auto">
-              <a href="#" class="btn btn-secondary rounded-circle btn-favorite text-gray-500">
-                <span class="icon-heart"></span>
-              </a>
-              <router-link :to="{ name: 'ApplicationForm' }" class="btn btn-primary py-2">APPLY JOB</router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row" data-aos="fade">
-        <div class="col-md-12">
-          <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
-            <div class="mb-4 mb-md-0 mr-5">
-              <div class="job-post-item-header d-flex align-items-center">
-                <h2 class="mr-3 text-black h4">Open Source Interactive Developer</h2>
-                <div class="badge-wrap">
-                  <span class="bg-danger text-white badge py-2 px-4">Temporary</span>
-                </div>
-              </div>
-              <div class="job-post-item-body d-block d-md-flex">
-                <div class="mr-3">
-                  <span class="fl-bigmug-line-portfolio23"></span>
-                  <a href="#">New York Times</a>
-                </div>
-                <div>
-                  <span class="fl-bigmug-line-big104"></span>
-                  <span>New York City, USA</span>
-                </div>
-              </div>
-            </div>
-            <div class="ml-auto">
-              <a href="#" class="btn btn-secondary rounded-circle btn-favorite text-gray-500">
-                <span class="icon-heart"></span>
-              </a>
-              <router-link :to="{ name: 'ApplicationForm' }" class="btn btn-primary py-2">APPLY JOB</router-link>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- start of job listing component -->
+      <JobListings :jobs="jobs" />
+      <!--End of joblistings-->
+
+
       <div class="row mt-5">
         <div class="col-md-12 text-center">
           <div class="site-block-27">
@@ -462,8 +114,22 @@ import '../../assets/css/animate.css'
 import '../../assets/css/flaticon.css'
 import '../../assets/css/fl-bigmug-line.css'
 
+import JobListings from '../../components/JobListings.vue'
+import { ref } from 'vue'
 export default {
-  name: 'Jobs'
+  name: 'Jobs',
+  components: {JobListings},
+  setup() {
+    const jobs = ref([
+      {title: 'Frontend Development', type: 'Full Time', location: 'Nairobi', id: 1},
+      {title: 'Sales & Marketing', type: 'Temporary', location: 'Nairobi', id: 2},
+      {title: 'Accountant', type: 'Part Time', location: 'Nairobi', id: 3},
+      {title: 'Junior Security Engineer', type: 'Internship', location: 'Nairobi', id: 4},
+      {title: 'Pentester', type: 'Freelance', location: 'Nairobi', id: 5},
+      {title: 'SOC Analyst', type: 'Full Time', location: 'Nairobi', id: 6}
+    ])
+    return { jobs }
+  }
 }
 </script>
 
