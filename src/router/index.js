@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Contact from '../views/Contact.vue'
 import ApplicationForm from '../views/jobs/ApplicationForm.vue'
+import JobsManagement from '../views/admin/JobsManagement.vue'
 
 
 const routes = [
@@ -37,6 +38,11 @@ const routes = [
     path: '/job/id/apply',
     name: 'ApplicationForm',
     component: ApplicationForm
+  },
+  {
+    path: '/admin',
+    name: 'JobsManagement',
+    component: JobsManagement
   }
 ]
 

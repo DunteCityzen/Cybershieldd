@@ -116,18 +116,41 @@ import '../../assets/css/fl-bigmug-line.css'
 
 import JobListings from '../../components/JobListings.vue'
 import { ref } from 'vue'
+import axios from 'axios'
 export default {
   name: 'Jobs',
   components: {JobListings},
   setup() {
-    const jobs = ref([
-      {title: 'Frontend Development', type: 'Full Time', location: 'Nairobi', id: 1},
-      {title: 'Sales & Marketing', type: 'Temporary', location: 'Nairobi', id: 2},
-      {title: 'Accountant', type: 'Part Time', location: 'Nairobi', id: 3},
-      {title: 'Junior Security Engineer', type: 'Internship', location: 'Nairobi', id: 4},
-      {title: 'Pentester', type: 'Freelance', location: 'Nairobi', id: 5},
-      {title: 'SOC Analyst', type: 'Full Time', location: 'Nairobi', id: 6}
-    ])
+    let jobs = ref([])
+    
+    axios.get('https://cybershield-ee459-default-rtdb.firebaseio.com/jobs.json')
+    .then(response => {
+      const data = response.data;
+      const keyValuePairs = [];
+
+      for (let key in data) {
+        if (data.hasOwnProperty(key)) {
+          const nestedObject = data[key];
+          const formattedObject = {};
+
+          for (let nestedKey in nestedObject) {
+            if (nestedObject.hasOwnProperty(nestedKey)) {
+              const value = nestedObject[nestedKey];
+              formattedObject[nestedKey] = value;
+            }
+          }
+
+          keyValuePairs.push(formattedObject);
+        }
+      }
+      jobs.value = keyValuePairs
+      console.log(jobs)
+      
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
     return { jobs }
   }
 }

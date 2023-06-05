@@ -5,16 +5,17 @@
 </template>
 
 <script>
+import { onMounted } from 'vue';
 import SingleJob from './SingleJob.vue'
 export default {
     name: 'JobListings',
     components: { SingleJob },
-    props: [ 'jobs' ]
+    props: [ 'jobs' ],
+    setup(props) {
+        /* onMounted(() => {
+            console.log(props.jobs)
+        }) */
+    }
 }
 </script>
 
-<style>
-.job-listings {
-    justify-content: space-between;
-}
-</style>
