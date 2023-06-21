@@ -6,6 +6,7 @@ import Register from '../views/Register.vue'
 import Contact from '../views/Contact.vue'
 import ApplicationForm from '../views/jobs/ApplicationForm.vue'
 import JobsManagement from '../views/admin/JobsManagement.vue'
+import AdminDashboard from '../views/admin/AdminDashboard'
 
 
 const routes = [
@@ -40,9 +41,14 @@ const routes = [
     component: ApplicationForm
   },
   {
-    path: '/admin',
+    path: '/jobmanagement',
     name: 'JobsManagement',
     component: JobsManagement
+  },
+  {
+    path: '/admin',
+    name: 'AdminDashboard',
+    component: AdminDashboard
   }
 ]
 

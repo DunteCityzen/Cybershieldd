@@ -26,7 +26,7 @@
                           <option value="fulltime">Part Time</option>
                           <option value="freelance">Freelance</option>
                           <option value="internship">Internship</option>
-                          <option value="internship">Termporary</option>
+                          <option value="internship">Temporary</option>
                         </select>
                       </div>
                     </div>
@@ -51,7 +51,7 @@
                           <option value="fulltime">Part Time</option>
                           <option value="freelance">Freelance</option>
                           <option value="internship">Internship</option>
-                          <option value="internship">Termporary</option>
+                          <option value="internship">Temporary</option>
                         </select>
                       </div>
                     </div>
