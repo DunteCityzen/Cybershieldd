@@ -77,7 +77,8 @@
 </template>
 
 <script>
-import '../../assets/css/font-awsome.min.css'
+/* import '../../../node_modules/jquery/dist/jquery.min.js' */
+
 
 export default {
 name: 'AdminDashboard'
