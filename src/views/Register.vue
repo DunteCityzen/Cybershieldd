@@ -6,6 +6,16 @@
                     <h2 class="title">User Registration Form</h2>
                 </div>
                 <div class="card-body">
+                    <div class="features_container">
+                        <h2>Register at a small fee of 500 shillings to get access to special features such as: </h2>
+                        <ul class="features_list">
+                            <li class="list_item">You get an account where you save all your information once and never prompted again while applying for new job</li>
+                            <li class="list_item">You're able to see the number of people who have applied for a particular job</li>
+                            <li class="list_item">You'll receive job alerts for jobs that much your skillset</li>
+                        </ul>
+                        <h3>Deposit to the account number and send the transaction code with your registration</h3>
+                        <h2>01162257500</h2>
+                    </div>
                     <form method="POST">
                         <div class="form-row m-b-55">
                             <div class="name">Name</div>
@@ -50,6 +60,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="name">Transaction ID</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="text" name="transactionId">
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-row p-t-20">
                             <label class="label label--block">Gender</label>
                             <div class="p-t-15">
@@ -80,7 +98,7 @@ export default {
 </script>
 
 <style>
-
+.features_container{margin-bottom: 8%;}
 .font-robo{font-family:roboto,arial,helvetica neue,sans-serif}
 .font-poppins{font-family:poppins,arial,helvetica neue,sans-serif}
 .font-opensans{font-family:open sans,arial,helvetica neue,sans-serif}

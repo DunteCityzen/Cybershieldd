@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-lg-8 align-self-baseline">
                     <p class="text-white-75 mb-5">Find jobs postings as they are made real time. Our registered users have unlimited access to job openings from any department and they can set up their own alerts which are triggered whenever the desired job,and/or job location.</p>
-                    <router-link :to="{ name: 'Register' }" class="btn btn-primary btn-xl">Register Today!!</router-link>
+                    <router-link :to="{ name: 'CompanyInfo' }" class="btn btn-primary btn-xl">More Info!!</router-link>
                 </div>
             </div>
         </div>

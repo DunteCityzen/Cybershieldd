@@ -25,7 +25,5 @@ name: 'JobManagement'
 </script>
 
 <style scoped>
-.ftco-section {
-    margin-top: 10%;
-}
+
 </style>

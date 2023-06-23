@@ -1,11 +1,11 @@
 <template>
-  <section class="ftco-section">
+  <section class="ftco-section adminheader">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <nav aria-label="breadcrumb navbar">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <router-link :to="{ name: 'JobApplications' }">Admin Panel</router-link>
+              <router-link :to="{ name: 'JobApplications' }">Job Applications</router-link>
             </li>
             <li class="breadcrumb-item">
               <router-link :to="{ name: 'JobManagement' }">Job Management</router-link>
@@ -31,7 +31,4 @@ name: 'AdminDashboard'
 </script>
 
 <style scoped>
-.ftco-section {
-  margin-top: 10%;
-}
 </style>
