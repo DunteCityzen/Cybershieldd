@@ -8,6 +8,10 @@ import ApplicationForm from '../views/jobs/ApplicationForm.vue'
 import AddJob from '../views/admin/job management/AddJob'
 import RemoveJob from '../views/admin/job management/RemoveJob'
 import AdminDashboard from '../views/admin/AdminDashboard'
+import UserProfile from '../views/users/UserProfile'
+import JobApplications from '../views/admin/job management/JobApplications'
+import UserManagement from '../views/admin/user management/UserManagement'
+import JobManagement from '../views/admin/job management/JobManagement'
 
 
 const routes = [
@@ -42,19 +46,31 @@ const routes = [
     component: ApplicationForm
   },
   {
-    path: '/jobmanagement/addjob',
-    name: 'AddJob',
-    component: AddJob
-  },
-  {
-    path: '/jobmanagement/removejob',
-    name: 'RemoveJob',
-    component: RemoveJob
+    path: '/admin/jobmanagement',
+    name: 'JobManagement',
+    component: JobManagement,
+    children: [
+      { path: 'addjob', name: 'AddJob', component: AddJob },
+      { path: 'removejob', name: 'RemoveJob', component: RemoveJob }
+    ]
   },
   {
     path: '/admin',
     name: 'AdminDashboard',
-    component: AdminDashboard
+    component: AdminDashboard,
+    children: [
+      { path: '', name: 'JobApplications', component: JobApplications }
+    ]
+  },
+  {
+    path: '/users/id/profile',
+    name: 'UserProfile',
+    component: UserProfile
+  },
+  {
+    path: '/admin/usermanagement',
+    name: 'UserManagement',
+    component: UserManagement
   }
 ]
 

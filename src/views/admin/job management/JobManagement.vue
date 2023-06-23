@@ -1,17 +1,14 @@
 <template>
-  <section class="ftco-section">
+    <section class="ftco-section">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <nav aria-label="breadcrumb navbar">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <router-link :to="{ name: 'JobApplications' }">Admin Panel</router-link>
+              <router-link :to="{ name: 'AddJob' }">Add Job</router-link>
             </li>
             <li class="breadcrumb-item">
-              <router-link :to="{ name: 'JobManagement' }">Job Management</router-link>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">
-              <router-link :to="{ name: 'UserManagement' }">User Management</router-link>
+              <router-link :to="{ name: 'RemoveJob' }">RemoveJob</router-link>
             </li>
           </ol>
         </nav>
@@ -22,16 +19,13 @@
 </template>
 
 <script>
-/* import '../../../node_modules/jquery/dist/jquery.min.js' */
-
-
 export default {
-name: 'AdminDashboard'
+name: 'JobManagement'
 }
 </script>
 
 <style scoped>
 .ftco-section {
-  margin-top: 10%;
+    margin-top: 10%;
 }
 </style>
