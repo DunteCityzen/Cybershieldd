@@ -11,59 +11,21 @@
                     <table class="table table-dark">
                         <thead>
                             <tr class="bg-dark">
-                                <th>Application ID</th>
-                                <th>Date</th>
                                 <th>Job ID</th>
-                                <th>Job Title</th>
                                 <th>Applicant ID</th>
-                                <th>Applicant name</th>
+                                <th>Applicant Name</th>
+                                <th>Message</th>
+                                <th>Date</th>
                                 <th>&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-primary">
-                                <th scope="row">1001</th>
-                                <td>21.02.2023</td>
-                                <td>12</td>
-                                <td>Security Analyst</td>
-                                <td>1001</td>
-                                <td>Kevin Odour</td>
-                                <td><a href="#"><i class="fa fa-edit"></i></a></td>
-                            </tr>
-                            <tr class="bg-success">
-                                <th scope="row">1002</th>
-                                <td>22.02.2023</td>
-                                <td>13</td>
-                                <td>Pentester</td>
-                                <td>1002</td>
-                                <td>Biran Kadumba</td>
-                                <td><a href="#"><i class="fa fa-edit"></i></a></td>
-                            </tr>
-                            <tr class="bg-warning">
-                                <th scope="row">1001</th>
-                                <td>23.02.2023</td>
-                                <td>14</td>
-                                <td>Frontend Developer</td>
-                                <td>1004</td>
-                                <td>Brenda Shighadi</td>
-                                <td><a href="#"><i class="fa fa-edit"></i></a></td>
-                            </tr>
-                            <tr class="bg-danger">
-                                <th scope="row">1001</th>
-                                <td>21.02.2023</td>
-                                <td>12</td>
-                                <td>Security Analyst</td>
-                                <td>1001</td>
-                                <td>Kevin Odour</td>
-                                <td><a href="#"><i class="fa fa-edit"></i></a></td>
-                            </tr>
-                            <tr class="bg-info">
-                                <th scope="row">1002</th>
-                                <td>22.02.2023</td>
-                                <td>13</td>
-                                <td>Pentester</td>
-                                <td>1002</td>
-                                <td>Biran Kadumba</td>
+                            <tr class="bg-primary" v-for="application in applications" :key="application.jobid">
+                                <th scope="row">{{ application.jobid }}</th>
+                                <td>{{ application.idno }}</td>
+                                <td>{{ application.fullname }}</td>
+                                <td>{{ application.message }}</td>
+                                <td>{{ application.date }}</td>
                                 <td><a href="#"><i class="fa fa-edit"></i></a></td>
                             </tr>
                         </tbody>
@@ -75,8 +37,43 @@
 </template>
 
 <script>
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
 export default {
+setup() {
+  const applications = ref([])
+  onMounted(() => {
+    axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/applications.json')
+    .then(response => {
+      const data = response.data;
+      console.log(data)
+      const keyValuePairs = [];
+      for (let key in data) {
+        if (data.hasOwnProperty(key)) {
+          const nestedObject = data[key];
+          const formattedObject = {};
 
+          for (let nestedKey in nestedObject) {
+            if (nestedObject.hasOwnProperty(nestedKey)) {
+              const value = nestedObject[nestedKey];
+              formattedObject[nestedKey] = value;
+            }
+          }
+
+          keyValuePairs.push(formattedObject);
+        }
+      }
+      applications.value = keyValuePairs
+      console.log(applications)
+      
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  })
+
+  return { applications }
+}
 }
 </script>
 

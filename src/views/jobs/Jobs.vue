@@ -121,9 +121,9 @@ export default {
   name: 'Jobs',
   components: {JobListings},
   setup() {
-    let jobs = ref([])
+    const jobs = ref([])
     
-    axios.get('https://cybershield-ee459-default-rtdb.firebaseio.com/jobs.json')
+    axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/jobs.json')
     .then(response => {
       const data = response.data;
       const keyValuePairs = [];

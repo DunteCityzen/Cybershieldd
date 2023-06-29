@@ -35,6 +35,12 @@ const routes = [
     component: Jobs
   },
   {
+    path: '/jobs/:id/apply',
+    name: 'ApplicationForm',
+    component: ApplicationForm,
+    props: true
+  },
+  {
     path: '/login',
     name: 'Login',
     component: Login
@@ -48,11 +54,6 @@ const routes = [
     path: '/Contact-us',
     name: 'Contact',
     component: Contact
-  },
-  {
-    path: '/job/id/apply',
-    name: 'ApplicationForm',
-    component: ApplicationForm
   },
   {
     path: '/admin',

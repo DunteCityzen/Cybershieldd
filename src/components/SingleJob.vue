@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="ml-auto">
-                    <router-link :to="{ name: 'ApplicationForm' }" class="btn btn-primary py-2">APPLY JOB</router-link>
+                    <router-link :to="{ name: 'ApplicationForm', params: { id: job.id } }" class="btn btn-primary py-2">APPLY JOB</router-link>
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@
 <h2 class="title">Add New Job</h2>
 </div>
 <div class="card-body">
-<form method="POST">
+<form @submit.prevent="addJob">
 <div class="form-row">
 <div class="name">Job ID</div>
 <div class="value">
@@ -25,7 +25,14 @@
 <div class="name">Job Type</div>
 <div class="value">
 <div class="input-group">
-<input class="input--style-6" type="text" id="type">
+<select class="input--style-6" type="text" id="type">
+    <option value="">Category</option>
+    <option value="fulltime">Full Time</option>
+    <option value="fulltime">Part Time</option>
+    <option value="freelance">Freelance</option>
+    <option value="internship">Internship</option>
+    <option value="internship">Temporary</option>
+</select>
 </div>
 </div>
 </div>
@@ -48,7 +55,7 @@
 </form>
 </div>
 <div class="card-footer">
-<button class="btn btn--radius-2 btn--blue-2" type="submit">Add</button>
+<button class="btn btn--radius-2 btn--blue-2" type="submit" @click="addJob">Add</button>
 </div>
 </div>
 </div>
@@ -79,9 +86,9 @@ export default {
             id: id
         }
 
-        axios.post('https://cybershield-ee459-default-rtdb.firebaseio.com/jobs.json', jobData)
+        axios.post('https://cybershield-24f97-default-rtdb.firebaseio.com/jobs.json', jobData)
         .then(response => {
-            console.log(response)
+            console.log(response, jobData)
         })
     }
     return { addJob }

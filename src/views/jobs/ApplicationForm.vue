@@ -6,18 +6,24 @@
 <h2 class="title">Apply for job</h2>
 </div>
 <div class="card-body">
-<form method="POST">
+<form @submit.prevent="applyJob">
 <div class="form-row">
 <div class="name">Full name</div>
 <div class="value">
-<input class="input--style-6" type="text" name="full_name">
+<input class="input--style-6" id="fullname" type="text" name="full_name">
+</div>
+</div>
+<div class="form-row">
+<div class="name">ID No.</div>
+<div class="value">
+<input class="input--style-6" id="idno" type="number" name="full_name">
 </div>
 </div>
 <div class="form-row">
 <div class="name">Email address</div>
 <div class="value">
 <div class="input-group">
-<input class="input--style-6" type="email" name="email" placeholder="example@email.com">
+<input class="input--style-6" id="email" type="email" name="email" placeholder="example@email.com">
 </div>
 </div>
 </div>
@@ -25,7 +31,7 @@
 <div class="name">Message</div>
 <div class="value">
 <div class="input-group">
-<textarea class="textarea--style-6" name="message" placeholder="Message sent to the employer"></textarea>
+<textarea class="textarea--style-6" name="message" id="message" placeholder="Message sent to the employer"></textarea>
 </div>
 </div>
 </div>
@@ -33,7 +39,7 @@
 <div class="name">Upload CV</div>
 <div class="value">
 <div class="input-group js-input-file">
-<input class="input-file" type="file" name="file_cv" id="file">
+<input class="input-file" type="file" name="file_cv" id="file" @change="uploadFile">
 <label class="label--file" for="file">Choose file</label>
 <span class="input-file__info">No file chosen</span>
 </div>
@@ -43,7 +49,7 @@
 </form>
 </div>
 <div class="card-footer">
-<button class="btn btn--radius-2 btn--blue-2" type="submit">Send Application</button>
+<button class="btn btn--radius-2 btn--blue-2" @click="applyJob" type="submit">Send Application</button>
 </div>
 </div>
 </div>
@@ -51,9 +57,64 @@
 </template>
 
 <script>
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import axios from 'axios'
 /* import '../../../node_modules/jquery/dist/jquery.min.js' */
 export default {
-    name: 'Application'
+    name: 'ApplicationForm',
+    props: ['id'],
+    setup() {
+        let routeParams = {}
+        let jobid = null
+        let fileData = {}
+        let uploadFileElement = document.getElementById("file")
+        
+        const applyJob = () => {
+            jobid = routeParams.value.id
+            let unformateddate = new Date()
+            let date = unformateddate.toLocaleDateString('en-US')
+            let fullname = document.getElementById('fullname').value
+            let idno = document.getElementById('idno').value
+            let email = document.getElementById('email').value
+            let message = document.getElementById('message').value
+            const appData = {
+                jobid: jobid,
+                date: date,
+                fullname: fullname,
+                idno: idno,
+                email: email,
+                message: message,
+                cv: fileData
+            }
+            axios.post('https://cybershield-24f97-default-rtdb.firebaseio.com/applications.json', appData)
+            .then((response) => {
+                console.log(response)
+                alert("Application Successful")
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+            console.log(appData)
+        }
+        const uploadFile = () => {
+            uploadFileElement = document.getElementById("file")
+            let file = uploadFileElement.files[0]
+            if(file) {
+                const reader = new FileReader()
+                reader.onload = (e) => {
+                    fileData = e.target.result
+                }
+                reader.readAsDataURL(file)
+            }
+            console.log(file)
+        }
+        onMounted(() => {
+            const route = useRoute()
+            routeParams.value = route.params
+        })
+        return { uploadFile, applyJob }
+    }
 }
 </script>
 

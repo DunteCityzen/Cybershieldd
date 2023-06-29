@@ -6,25 +6,36 @@
 <h2 class="title">Remove job</h2>
 </div>
 <div class="card-body">
-<form method="POST">
+<form @submit.prevent="removeJob">
 <div class="form-row">
 <div class="name">Job Id</div>
 <div class="value">
-<input class="input--style-6" type="number" id="jobId">
+<input class="input--style-6" v-model="jobid" type="number">
 </div>
 </div>
+<!-- <div class="form-row">
+<div class="name">OR</div>
+<div class="value">
+</div>
+</div>
+<div class="form-row">
+<div class="name">Job Title</div>
+<div class="value">
+<input class="input--style-6" v-model="jobtitle" type="text">
+</div>
+</div> -->
 <div class="form-row">
 <div class="name">Reason</div>
 <div class="value">
 <div class="input-group">
-<textarea class="input--style-6" type="text" id="reason"/>
+<textarea class="input--style-6" v-model="reason" type="text" id="reason"/>
 </div>
 </div>
 </div>
 </form>
 </div>
 <div class="card-footer">
-<button class="btn btn--radius-2 btn--blue-2" type="submit">Remove</button>
+<button class="btn btn--radius-2 btn--blue-2" @click="removeJob" type="submit">Remove</button>
 </div>
 </div>
 </div>
@@ -32,8 +43,92 @@
 </template>
 
 <script>
+import { ref } from 'vue'
+import axios from 'axios'
 export default {
-name: 'RemoveJob'
+name: 'RemoveJob',
+setup() {
+  let found = true
+  const reason = ref('')
+  const jobid = ref()
+  const jobs = ref([])
+  const removeJob = () => {
+    axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/jobs.json')
+    .then(response => {
+      const data = response.data
+      
+      for (let key in data) {
+        console.log(key)
+        console.log(data[key].id)
+        if (data[key].id == jobid.value) {
+          console.log('successful', data[key].id)
+          console.log(jobid.value)
+          delete data[key]
+          axios.put('https://cybershield-24f97-default-rtdb.firebaseio.com/jobs.json', data)
+          .then((response) => {
+            console.log(response)
+          } )
+          .catch(error => {
+            console.log(error)
+          })
+          
+          found = true
+          break
+        }
+        else {
+          found = false
+        }
+      }
+
+      /* const keyValuePairs = [];
+
+      for (let key in data) {
+        if (data.hasOwnProperty(key)) {
+          const nestedObject = data[key];
+          const formattedObject = {};
+
+          for (let nestedKey in nestedObject) {
+            if (nestedObject.hasOwnProperty(nestedKey)) {
+              const value = nestedObject[nestedKey];
+              formattedObject[nestedKey] = value;
+            }
+          }
+
+          keyValuePairs.push(formattedObject);
+        }
+      }
+      jobs.value = keyValuePairs
+      console.log(jobs.value)
+      let myarray = jobs.value
+      console.log(myarray.length)
+      for (let i = 0; i < myarray.length; i++) {
+        if (myarray[i].id == jobid.value) {
+          console.log('successful', myarray[i].id)
+          console.log(myarray[i])
+          console.log(jobid.value)
+          myarray.pop(i)
+          console.log(myarray)
+          axios.put('https://cybershield-24f97-default-rtdb.firebaseio.com/jobs.json', myarray)
+          .then((response) => {
+            console.log(response)
+          } )
+          .catch(error => {
+            console.log(error)
+          })
+        }
+        else {
+          console.log('No match')
+          console.log(jobid.value)
+        }
+      } */
+    console.log("Job Found: ", found)
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+  return { removeJob, jobid, found }
+}
 }
 </script>
 

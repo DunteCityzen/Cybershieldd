@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import { onMounted } from 'vue';
 import SingleJob from './SingleJob.vue'
 export default {
     name: 'JobListings',
