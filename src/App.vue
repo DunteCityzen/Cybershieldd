@@ -8,6 +8,8 @@
 import Navbar from './components/Navbar.vue'
 import AdminNavbar from './components/AdminNavbar.vue'
 import Footer from './components/Footer.vue'
+import { onMounted, ref } from 'vue'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 export default {
   name: 'App',
@@ -42,6 +44,20 @@ export default {
           return Navbar
       }
     }
+  },
+  setup() {
+    const isLoggedIn = ref(false)
+    onMounted(() => {
+      const auth = getAuth()
+      onAuthStateChanged(auth, (user) => {
+        if(user) {
+          isLoggedIn.value = true
+        }
+        else {
+          isLoggedIn.value = false
+        }
+      })
+    })
   }
 }
 </script>

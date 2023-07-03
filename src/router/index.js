@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import Home from '../views/Home.vue'
 import CompanyInfo from '../views/CompanyInfo.vue'
 import Jobs from  '../views/jobs/Jobs.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import RegistrationForm from '../views/RegistrationForm'
 import Contact from '../views/Contact.vue'
 import ApplicationForm from '../views/jobs/ApplicationForm.vue'
 import AddJob from '../views/admin/job management/AddJob'
@@ -51,7 +53,12 @@ const routes = [
     component: Register
   },
   {
-    path: '/Contact-us',
+    path: '/regform',
+    name: 'RegistrationForm',
+    component: RegistrationForm
+  },
+  {
+    path: '/contact-us',
     name: 'Contact',
     component: Contact
   },
@@ -66,9 +73,12 @@ const routes = [
     ]
   },
   {
-    path: '/users/id/profile',
+    path: '/user/profile',
     name: 'UserProfile',
-    component: UserProfile
+    component: UserProfile,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/admin/settings',
@@ -82,4 +92,47 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach(async (to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    try {
+      const user = await getCurrentUser();
+      if (user) {
+        next();
+      } else {
+        alert('Access Denied. Please login');
+        next('/login');
+      }
+    } catch (error) {
+      console.error('Error checking user authentication:', error);
+      next('/login');
+    }
+  } 
+  /* else if (to.matched.some((record) => record.meta.requiresAuth)) {
+    try {
+      const user = await getCurrentUser();
+      if (user) {
+        next();
+      } else {
+        alert('Access Denied. Please login');
+        next('/login');
+      }
+    } catch (error) {
+      console.error('Error checking user authentication:', error);
+      next('/login');
+    }
+  } */ else {
+    next();
+  }
+});
+
+const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      unsubscribe();
+      resolve(user);
+    }, reject);
+  });
+};
+  
 export default router

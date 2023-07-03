@@ -3,88 +3,29 @@
         <div class="wrapper wrapper--w790">
             <div class="card card-5">
                 <div class="card-heading">
-                    <h2 class="title">User Registration Form</h2>
+                    <h2 class="title">User Registration</h2>
                 </div>
                 <div class="card-body">
                     <div class="features_container">
-                        <h2>Register at a small fee of 500 shillings to get access to special features such as: </h2>
+                        <h2>Register at a small fee of Ksh 500 to get access to special features such as: </h2>
                         <ul class="features_list">
                             <li class="list_item">You get an account where you save all your information once and never prompted again while applying for new job</li>
                             <li class="list_item">You're able to see the number of people who have applied for a particular job</li>
                             <li class="list_item">You'll receive job alerts for jobs that much your skillset</li>
                         </ul>
-                        <h3>Deposit to the account number and send the transaction code with your registration</h3>
-                        <h2>01162257500</h2>
                     </div>
-                    <form method="POST">
-                        <div class="form-row m-b-55">
-                            <div class="name">Name</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="text" name="names">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name">National ID</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="number" name="company">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name">Email</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="email" name="email">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row m-b-55">
-                            <div class="name">Phone</div>
-                            <div class="value">
-                                <div class="row row-refine">
-                                    <div class="col-3">
-                                        <div class="input-group-desc">
-                                            <input class="input--style-5" type="text" name="area_code" placeholder="254">
-                                            <label class="label--desc">Area Code</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-9">
-                                        <div class="input-group-desc">
-                                            <input class="input--style-5" type="text" name="phone" placeholder="720000000">
-                                            <label class="label--desc">Phone Number</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name">Transaction ID</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="text" name="transactionId">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row p-t-20">
-                            <label class="label label--block">Gender</label>
-                            <div class="p-t-15">
-                                <label class="radio-container m-r-55">Male
-                                    <input type="radio" checked="checked" name="exist">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="radio-container">Female
-                                    <input type="radio" name="exist">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div>
-                            <button class="form-control btn btn-primary submit px-3" type="submit">Register</button>
-                        </div>
-                    </form>
+                    <stripe-checkout
+                        ref = "checkoutRef"
+                        mode = "subscription"
+                        :pk = "publishableKey"
+                        :line-items = "lineItems"
+                        :successful-url = "successURL"
+                        :cancel-url = "cancelURL"
+                        @loading = "v => loading = v"
+                    />
+                    <div>
+                        <button class="form-control btn btn-primary submit px-3" @click="checkOut" type="submit">Pay</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -92,8 +33,30 @@
 </template>
 
 <script>
+import { StripeCheckout } from '@vue-stripe/vue-stripe'
+
 export default {
-    name: 'Login'
+    name: 'Login',
+    components: { StripeCheckout },
+    data() {
+        this.publishableKey = 'pk_test_51NOe22BdOa6JiJmo0PVnCV5W9KDFVZLapUZSeYTBgyr71kiqU88t5ZPEFgBw4jDtMASYdd9IEAiUNuj0JIEsTvhl00pJTGCpyW'
+        return {
+            loading: false,
+            lineItems: [
+                {
+                    price: 'price_1NOeWpBdOa6JiJmoTh6IFH4A',
+                    quantity: 1
+                }
+            ],
+            successURL: 'http://localhost:8080/regform',
+            cancelURL: 'http://localhost:8080/register'
+        }
+    },
+    methods: {
+        checkOut() {
+            this.$refs.checkoutRef.redirectToCheckout()
+        }
+    }
 }
 </script>
 

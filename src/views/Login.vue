@@ -10,23 +10,23 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="login-wrap p-0">
                         <h3 class="mb-4 text-center">Login</h3>
-                        <form action="#" class="signin-form">
+                        <div class="signin-form">
                             <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Email address" required>
+                                <input type="email" class="form-control" id="email" placeholder="Email address" required>
                             </div>
                             <div class="form-group">
                                 <input id="password-field" type="password" class="form-control" placeholder="Password" required>
                                 <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="form-control btn btn-primary submit px-3">Log In</button>
+                                <button @click="login" class="form-control btn btn-primary submit px-3">Log In</button>
                             </div>
                             <div class="form-group d-md-flex">
                                 <div class="w-50 text-md-right">
                                     <a href="#" style="color: #fff">Forgot Password</a>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                         <p class="w-100 text-center">&mdash; Don't have an account? &mdash;</p>
                         <div class="text-center">
                             <router-link :to="{ name: 'Register' }" class="px-2 py-2 mr-md-1"><span></span> Register! </router-link>
@@ -39,8 +39,31 @@
 </template>
 
 <script>
+import { signInWithEmailAndPassword, getAuth } from 'firebase/auth'
+import { useRouter } from 'vue-router'
+
 export default {
-    name: 'Login'
+    name: 'Login',
+    setup() {
+      const router = useRouter()
+      const login = () => {
+        const email = document.getElementById('email').value
+        const password = document.getElementById('password-field').value
+
+        signInWithEmailAndPassword(getAuth(), email, password)
+        .then((data) => {
+          console.log(data)
+          alert("Login successful")
+          router.push('/user/profile')
+        })
+        .catch((error) => {
+          console.log(error.code)
+          alert(error.message)
+        })
+      }
+      
+      return { login }
+    }
 }
 
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container margintop">
     <div class="main-body">
     
           <!-- Breadcrumb -->
@@ -18,10 +18,16 @@
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
-                    <div class="mt-3">
-                      <h4>John Doe</h4>
-                      <p class="text-secondary mb-1">Full Stack Developer</p>
-                      <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                    <div v-if="userData" class="mt-3">
+                      <h4 id="fullname1">{{ userData.fullname }}</h4>
+                      <p class="text-secondary mb-1">Open For Employment</p>
+                      <p class="text-muted font-size-sm" id="address1">{{ userData.address }}</p>
+                    </div>
+                    <div v-else-if="userData === null" class="mt-3">
+                      <p>Loading...</p>
+                    </div>
+                    <div v-else class="mt-3">
+                      <p>Error fetching data</p>
                     </div>
                   </div>
                 </div>
@@ -53,13 +59,13 @@
             </div>
             <div class="col-md-8">
               <div class="card mb-3">
-                <div class="card-body">
+                <div v-if="userData" class="card-body">
                   <div class="row">
                     <div class="col-sm-3">
                       <h6 class="mb-0">Official Name</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
-                      Kenneth Valdez
+                    <div class="col-sm-9 text-secondary" id="fullname">
+                      {{ userData.fullname }}
                     </div>
                   </div>
                   <hr>
@@ -67,8 +73,8 @@
                     <div class="col-sm-3">
                       <h6 class="mb-0">ID No.</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
-                      35897520
+                    <div class="col-sm-9 text-secondary" id="idno">
+                      {{ userData.idno }}
                     </div>
                   </div>
                   <hr>
@@ -76,8 +82,8 @@
                     <div class="col-sm-3">
                       <h6 class="mb-0">Email</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
-                      fip@jukmuh.al
+                    <div class="col-sm-9 text-secondary" id="email">
+                      {{ userData.email }}
                     </div>
                   </div>
                   <hr>
@@ -85,8 +91,8 @@
                     <div class="col-sm-3">
                       <h6 class="mb-0">Mobile</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
-                      (320) 380-4539
+                    <div class="col-sm-9 text-secondary" id="phoneno">
+                      {{ userData.phoneno }}
                     </div>
                   </div>
                   <hr>
@@ -94,8 +100,8 @@
                     <div class="col-sm-3">
                       <h6 class="mb-0">Address</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
-                      Bay Area, San Francisco, CA
+                    <div class="col-sm-9 text-secondary" id="address">
+                      {{ userData.address }}
                     </div>
                   </div>
                   <hr>
@@ -113,6 +119,12 @@
                       <a class="btn btn-info " target="__blank" href="#">Edit</a>
                     </div>
                   </div>
+                </div>
+                <div v-else-if="userData === null" class="card-body">
+                  <h1>Loading...</h1>
+                </div>
+                <div v-else class="card-body">
+                  <h1>Error retrieving your data from the database</h1>
                 </div>
               </div>
 
@@ -152,8 +164,64 @@
 </template>
 
 <script>
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
+
 export default {
-name: 'UserProfile'
+name: 'UserProfile',
+setup() {
+  let auth = getAuth()
+  let userData = {}
+  let isLoggedIn
+  let email = auth.currentUser.email
+  let data
+
+  axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/userdata.json')
+    .then(response => {
+      data = response.data
+      for (let key in data) {
+        console.log(email, 'from auth.currentUser')
+        console.log(data[key].email, 'from axios fetch')
+        if (String(data[key].email) == String(email)) {
+          userData = {
+            fullname: data[key].fullname,
+            idno: data[key].idno,
+            email: data[key].email,
+            phoneno: data[key].phoneno,
+            address: data[key].address
+          }
+          console.log(userData)
+          document.getElementById('fullname').textContent = userData.fullname
+          document.getElementById('fullname1').textContent = userData.fullname
+          document.getElementById('idno').textContent = userData.idno
+          document.getElementById('email').textContent = userData.email
+          document.getElementById('phoneno').textContent = userData.phoneno
+          document.getElementById('address').textContent = userData.address
+          document.getElementById('address1').textContent = userData.address
+          break
+        }
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    })
+
+  onMounted(() => {
+    
+    
+    
+      if (auth) {
+        isLoggedIn = true
+      }
+      else {
+        isLoggedIn = false
+      }
+    /* console.log(isLoggedIn, email, auth.currentUser.email) */
+  })
+
+  return { auth, isLoggedIn, userData, data }
+}
 }
 </script>
 
@@ -164,6 +232,11 @@ body{
     text-align: left;
     background-color: #e2e8f0;    
 }
+
+.margintop {
+  margin-top: 5%;
+}
+
 .main-body {
     padding: 15px;
 }

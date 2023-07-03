@@ -8,54 +8,35 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="table-wrap">
-                    <table class="table table-dark">
+                    <table class="table table-dark" id="usersTable">
                         <thead>
                             <tr class="bg-dark">
                                 <th>User ID</th>
-                                <th>Full Name</th>
+                                <th>Name</th>
                                 <th>ID No.</th>
-                                <th>Status</th>
+                                <th>Email</th>
+                                <th>Phone No.</th>
+                                <th>Address</th>
+                                <th>Gender</th>
                                 <th>&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-primary">
-                                <th scope="row">1001</th>
-                                <td>Tevin Inyata</td>
-                                <td>34568751</td>
-                                <td>Confirmed</td>
-                                <td><a href="#"><i class="fa fa-edit"></i></a></td>
-                            </tr>
-                            <tr class="bg-success">
-                                <th scope="row">1002</th>
-                                <td>Kevin Onyata</td>
-                                <td>32568752</td>
-                                <td>Pending</td>
-                                <td><a href="#"><i class="fa fa-edit"></i></a></td>
-                            </tr>
-                            <tr class="bg-warning">
-                                <th scope="row">1003</th>
-                                <td>Brian Ouma</td>
-                                <td>32879552</td>
-                                <td>Pending</td>
-                                <td><a href="#"><i class="fa fa-edit"></i></a></td>
-                            </tr>
-                            <tr class="bg-danger">
-                                <th scope="row">1004</th>
-                                <td>Peter Kamau</td>
-                                <td>32568752</td>
-                                <td>Pending</td>
-                                <td><a href="#"><i class="fa fa-edit"></i></a></td>
-                            </tr>
-                            <tr class="bg-info">
-                                <th scope="row">1005</th>
-                                <td>Tess Mawia</td>
-                                <td>32568752</td>
-                                <td>Pending</td>
+                            <tr class="bg-primary" v-for="user in users" :key="user.userid">
+                                <th scope="row">{{ user.userid }}</th>
+                                <td>{{ user.fullname }}</td>
+                                <td>{{ user.idno }}</td>
+                                <td>{{ user.email }}</td>
+                                <th>{{ user.phoneno }}</th>
+                                <th>{{ user.address }}</th>
+                                <th>{{ user.gender }}</th>
                                 <td><a href="#"><i class="fa fa-edit"></i></a></td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="btn-wrapper">
+                  <button @click="printUsers" class="btn-lo">Print Users</button>
                 </div>
             </div>
         </div>
@@ -63,8 +44,53 @@
 </template>
 
 <script>
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
+
 export default {
-name: 'Users'
+name: 'Users',
+setup() {
+  const users = ref([])
+  onMounted(() => {
+    axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/userdata.json')
+    .then(response => {
+      const data = response.data;
+      console.log(data)
+      const keyValuePairs = [];
+      for (let key in data) {
+        if (data.hasOwnProperty(key)) {
+          const nestedObject = data[key];
+          const formattedObject = {};
+
+          for (let nestedKey in nestedObject) {
+            if (nestedObject.hasOwnProperty(nestedKey)) {
+              const value = nestedObject[nestedKey];
+              formattedObject[nestedKey] = value;
+            }
+          }
+
+          keyValuePairs.push(formattedObject);
+        }
+      }
+      users.value = keyValuePairs
+      console.log(users)
+      
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  })
+
+  const printUsers = () => {
+    const doc = new jsPDF()
+    doc.autoTable({ html: '#usersTable' })
+    doc.save('users.pdf')
+  }
+
+  return { printUsers, users }
+}
 }
 </script>
 
@@ -110,6 +136,12 @@ name: 'Users'
 *::after {
   -webkit-box-sizing: border-box;
   box-sizing: border-box; }
+
+.btn-wrapper {
+  text-align: right;
+  margin-right: 5%;
+  padding: 10px
+}
 
 html {
   font-family: sans-serif;

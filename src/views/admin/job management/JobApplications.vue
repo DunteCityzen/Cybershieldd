@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="table-wrap">
-                    <table class="table table-dark">
+                    <table class="table table-dark" id="jobapplicationsTable">
                         <thead>
                             <tr class="bg-dark">
                                 <th>Job ID</th>
@@ -31,6 +31,9 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="btn-wrapper">
+                  <button @click="printApplications" class="btn-lo">Print Applications</button>
+                </div>
             </div>
         </div>
     </div>
@@ -39,6 +42,9 @@
 <script>
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
+
 export default {
 setup() {
   const applications = ref([])
@@ -72,7 +78,13 @@ setup() {
     });
   })
 
-  return { applications }
+  const printApplications = () => {
+    const doc = new jsPDF()
+    doc.autoTable({ html: '#jobapplicationsTable' })
+    doc.save('jobApplications.pdf')
+  }
+
+  return { applications, printApplications }
 }
 }
 </script>
@@ -128,6 +140,12 @@ html {
 
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block; }
+
+.btn-wrapper {
+  text-align: right;
+  margin-right: 5%;
+  padding: 10px
+}
 
 body {
   margin: 0;
