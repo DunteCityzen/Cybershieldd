@@ -38,7 +38,7 @@ export default {
           return AdminNavbar
         case 'Users':
           return AdminNavbar
-        case 'PendingRegistration':
+        case 'RemoveUser':
           return AdminNavbar
         default:
           return Navbar

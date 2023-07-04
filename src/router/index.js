@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import axios from 'axios'
 import Home from '../views/Home.vue'
 import CompanyInfo from '../views/CompanyInfo.vue'
 import Jobs from  '../views/jobs/Jobs.vue'
@@ -15,10 +16,9 @@ import UserProfile from '../views/users/UserProfile'
 import JobApplications from '../views/admin/job management/JobApplications'
 import UserManagement from '../views/admin/user management/UserManagement'
 import Users from '../views/admin/user management/Users'
-import PendingRegistration from '../views/admin/user management/PendingRegistration'
+import RemoveUser from '../views/admin/user management/RemoveUser'
 import JobManagement from '../views/admin/job management/JobManagement'
 import AdminSettings from '../views/admin/AdminSettings'
-
 
 const routes = [
   {
@@ -55,7 +55,16 @@ const routes = [
   {
     path: '/regform',
     name: 'RegistrationForm',
-    component: RegistrationForm
+    component: RegistrationForm,
+    beforeEnter: (to, from, next) => {
+      if (to.query.payment_success == 'true') {
+        // Allow access to the restricted route
+        next()
+      } else {
+        // Redirect to another page (e.g., error page or homepage)
+        next('/register')
+      }
+    }
   },
   {
     path: '/contact-us',
@@ -66,10 +75,13 @@ const routes = [
     path: '/admin',
     name: 'AdminDashboard',
     component: AdminDashboard,
+    meta: {
+      isAdmin: true
+    },
     children: [
-      { path: '', name: 'JobApplications', component: JobApplications },
-      { path: 'jobmanagement', name: 'JobManagement', component: JobManagement, children: [ { path: 'addjob', name: 'AddJob', component: AddJob }, { path: 'removejob', name: 'RemoveJob', component: RemoveJob } ] },
-      { path: 'usermanagement', name: 'UserManagement', component: UserManagement, children: [ { path: '', name: 'Users', component: Users }, { path: 'pendingregistration', name: 'PendingRegistration', component: PendingRegistration } ] }
+      { path: '', name: 'JobApplications', component: JobApplications, meta: { isAdmin: true } },
+      { path: 'jobmanagement', name: 'JobManagement', component: JobManagement, meta: { isAdmin: true }, children: [ { path: 'addjob', name: 'AddJob', component: AddJob, meta: { isAdmin: true } }, { path: 'removejob', name: 'RemoveJob', component: RemoveJob, meta: { isAdmin: true } } ] },
+      { path: 'usermanagement', name: 'UserManagement', component: UserManagement, meta: { isAdmin: true }, children: [ { path: '', name: 'Users', component: Users, meta: { isAdmin: true } }, { path: 'removeuser', name: 'RemoveUser', component: RemoveUser, meta: { isAdmin: true } } ] }
     ]
   },
   {
@@ -83,7 +95,10 @@ const routes = [
   {
     path: '/admin/settings',
     name: 'AdminSettings',
-    component: AdminSettings
+    component: AdminSettings,
+    meta: { 
+      isAdmin: true
+    }
   }
 ]
 
@@ -97,30 +112,31 @@ router.beforeEach(async (to, from, next) => {
     try {
       const user = await getCurrentUser();
       if (user) {
-        next();
+        next()
       } else {
-        alert('Access Denied. Please login');
-        next('/login');
+        alert('Access Denied. Please login')
+        next('/login')
       }
     } catch (error) {
       console.error('Error checking user authentication:', error);
-      next('/login');
+      next('/login')
     }
-  } 
-  /* else if (to.matched.some((record) => record.meta.requiresAuth)) {
+  }
+  else if (to.matched.some((record) => record.meta.isAdmin)) {
     try {
-      const user = await getCurrentUser();
-      if (user) {
-        next();
-      } else {
-        alert('Access Denied. Please login');
-        next('/login');
+      const user = await getCurrentUser()
+      if (user.email == adminemail) {
+        next()
+      }
+      else {
+        alert('Access Denied. Please login as admin')
+        next('/login')
       }
     } catch (error) {
       console.error('Error checking user authentication:', error);
       next('/login');
     }
-  } */ else {
+  } else {
     next();
   }
 });
@@ -134,5 +150,17 @@ const getCurrentUser = () => {
     }, reject);
   });
 };
+
+axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/admin.json')
+  .then((response) => {
+    const data = response.data
+    adminemail = data['-NZQuznlMF0Q6-BDB1Fi'].email // admin's identifier in the database. Don't change.
+  })
+  .catch((error) => {
+    console.log(error)
+    alert(error.message)
+  })
+
+let adminemail
   
 export default router

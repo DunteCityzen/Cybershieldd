@@ -8,7 +8,7 @@
               <router-link :to="{ name: 'Users' }">Users</router-link>
             </li>
             <li class="breadcrumb-item">
-              <router-link :to="{ name: 'PendingRegistration' }">Pending</router-link>
+              <router-link :to="{ name: 'RemoveUser' }">Remove User</router-link>
             </li>
           </ol>
         </nav>

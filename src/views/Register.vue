@@ -19,7 +19,7 @@
                         mode = "subscription"
                         :pk = "publishableKey"
                         :line-items = "lineItems"
-                        :successful-url = "successURL"
+                        :success-url = "successURL"
                         :cancel-url = "cancelURL"
                         @loading = "v => loading = v"
                     />
@@ -48,7 +48,7 @@ export default {
                     quantity: 1
                 }
             ],
-            successURL: 'http://localhost:8080/regform',
+            successURL: 'http://localhost:8080/regform?payment_success=true',
             cancelURL: 'http://localhost:8080/register'
         }
     },

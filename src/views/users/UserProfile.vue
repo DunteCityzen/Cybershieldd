@@ -116,7 +116,7 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-12">
-                      <a class="btn btn-info " target="__blank" href="#">Edit</a>
+                      <button class="btn btn-info " @click="edit">Edit</button>
                     </div>
                   </div>
                 </div>
@@ -177,6 +177,10 @@ setup() {
   let email = auth.currentUser.email
   let data
 
+  const edit = () => {
+    console.log('Button clicked')
+  }
+
   axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/userdata.json')
     .then(response => {
       data = response.data
@@ -220,7 +224,7 @@ setup() {
     /* console.log(isLoggedIn, email, auth.currentUser.email) */
   })
 
-  return { auth, isLoggedIn, userData, data }
+  return { auth, isLoggedIn, userData, data, edit }
 }
 }
 </script>
