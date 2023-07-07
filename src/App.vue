@@ -34,7 +34,7 @@ export default {
           return AdminNavbar
         case 'RemoveJob':
           return AdminNavbar
-        case 'AdminSettings':
+        case 'ContactForms':
           return AdminNavbar
         case 'Users':
           return AdminNavbar

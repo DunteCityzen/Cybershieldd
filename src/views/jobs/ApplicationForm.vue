@@ -28,6 +28,14 @@
 </div>
 </div>
 <div class="form-row">
+<div class="name">Mobile No.</div>
+<div class="value">
+<div class="input-group">
+<input class="input--style-6" id="phoneno" type="text" name="phoneno" placeholder="0720000000">
+</div>
+</div>
+</div>
+<div class="form-row">
 <div class="name">Message</div>
 <div class="value">
 <div class="input-group">
@@ -60,11 +68,13 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
+import { getAuth } from 'firebase/auth'
 /* import '../../../node_modules/jquery/dist/jquery.min.js' */
 export default {
     name: 'ApplicationForm',
     props: ['id'],
     setup() {
+        const auth = getAuth()
         let routeParams = {}
         let jobid = null
         let fileData = {}
@@ -77,6 +87,7 @@ export default {
             let fullname = document.getElementById('fullname').value
             let idno = document.getElementById('idno').value
             let email = document.getElementById('email').value
+            let phoneno = document.getElementById('phoneno').value
             let message = document.getElementById('message').value
             const appData = {
                 jobid: jobid,
@@ -84,6 +95,7 @@ export default {
                 fullname: fullname,
                 idno: idno,
                 email: email,
+                phoneno: phoneno,
                 message: message,
                 cv: fileData
             }
@@ -112,6 +124,24 @@ export default {
         onMounted(() => {
             const route = useRoute()
             routeParams.value = route.params
+            axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/userdata.json')
+            .then((response) => {
+                const data = response.data
+                for (let key in data) {
+                    if(data[key].email == auth.currentUser.email) {
+                        document.getElementById('fullname').value = data[key].fullname
+                        document.getElementById('idno').value = data[key].idno
+                        document.getElementById('email').value = data[key].email
+                        document.getElementById('phoneno').value = data[key].phoneno
+
+                        break
+                    }
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+                alert("Error Fetching your data from the database")
+            })
         })
         return { uploadFile, applyJob }
     }

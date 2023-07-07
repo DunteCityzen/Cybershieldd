@@ -7,6 +7,7 @@
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
                     <li class="nav-item"><router-link :to="{ name: 'Home' }" class="nav-link">Home</router-link></li>
                     <li class="nav-item" v-if="auth.currentUser == null"><router-link :to="{ name: 'Login' }" class="nav-link">Login/Register</router-link></li>
+                    <li class="nav-item" v-if="auth.currentUser == !null"><router-link :to="{ name: 'UserProfile' }" class="nav-link">My Profile</router-link></li>
                     <li class="nav-item"><router-link :to="{ name: 'Jobs' }" class="nav-link">Jobs</router-link></li>
                     <li class="nav-item"><router-link :to="{ name: 'Contact' }" class="nav-link">Contact us</router-link></li>
                 </ul>
@@ -20,16 +21,13 @@
 
 <script>
 import { getAuth, signOut } from 'firebase/auth'
-import { ref } from 'vue'
 
 export default {
     name: 'Navbar',
     setup() {
-        const auth = ref()
-        auth.value = getAuth()
-        console.log(auth.value)
+        const auth = getAuth()
         const logOut = () => {
-            signOut(auth.value)
+            signOut(auth)
         }
 
         return { auth, logOut }

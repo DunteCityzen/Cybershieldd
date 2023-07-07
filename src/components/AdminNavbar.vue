@@ -9,8 +9,8 @@
 </button>
 <div class="collapse navbar-collapse" id="ftco-nav">
 <ul class="navbar-nav ml-auto">
-<li class="nav-item"><router-link :to="{ name: 'AdminSettings' }" class="nav-link">Settings</router-link></li>
-<li class="nav-item"><button class="nav-link">Logout</button></li>
+<li class="nav-item"><router-link :to="{ name: 'ContactForms' }" class="nav-link">Contact Forms</router-link></li>
+<li class="nav-item"><button class="nav-link" @click="logout">Logout</button></li>
 </ul>
 </div>
 </div>
@@ -21,8 +21,17 @@
 </template>
 
 <script>
+import { getAuth, signOut } from 'firebase/auth'
 export default {
-name: 'AdminNavbar'
+name: 'AdminNavbar',
+setup() {
+  const auth = getAuth()
+  const logout = () => {
+    signOut(auth)
+  }
+
+  return { logout, auth }
+}
 }
 </script>
 

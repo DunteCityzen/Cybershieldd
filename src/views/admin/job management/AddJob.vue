@@ -83,7 +83,8 @@ export default {
             type: type,
             description: description,
             location: location,
-            id: id
+            id: id,
+            applicants: 0
         }
 
         axios.post('https://cybershield-24f97-default-rtdb.firebaseio.com/jobs.json', jobData)

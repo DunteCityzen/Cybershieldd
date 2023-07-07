@@ -64,17 +64,21 @@
                     <div class="col-sm-3">
                       <h6 class="mb-0">Official Name</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary" id="fullname">
-                      {{ userData.fullname }}
+                    <div id="fullname-wrapper">
+                      <div class="col-sm-9 text-secondary" id="fullname">
+                        {{ userData.fullname }}
+                      </div>
                     </div>
                   </div>
                   <hr>
-                  <div class="row">
+                  <div class="row" id="row2">
                     <div class="col-sm-3">
                       <h6 class="mb-0">ID No.</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary" id="idno">
-                      {{ userData.idno }}
+                    <div id="idno-wrapper">
+                      <div class="col-sm-9 text-secondary" id="idno">
+                        {{ userData.idno }}
+                      </div>
                     </div>
                   </div>
                   <hr>
@@ -82,8 +86,10 @@
                     <div class="col-sm-3">
                       <h6 class="mb-0">Email</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary" id="email">
-                      {{ userData.email }}
+                    <div id="email-wrapper">
+                      <div class="col-sm-9 text-secondary" id="email">
+                        {{ userData.email }}
+                      </div>
                     </div>
                   </div>
                   <hr>
@@ -91,8 +97,8 @@
                     <div class="col-sm-3">
                       <h6 class="mb-0">Mobile</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary" id="phoneno">
-                      {{ userData.phoneno }}
+                    <div id="phoneno-wrapper">
+                      <input type="text" value="" class="col-sm-9 text-secondary" id="phoneno" />
                     </div>
                   </div>
                   <hr>
@@ -100,23 +106,14 @@
                     <div class="col-sm-3">
                       <h6 class="mb-0">Address</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary" id="address">
-                      {{ userData.address }}
+                    <div id="address-wrapper">
+                      <input type="text" value="" class="col-sm-9 text-secondary" id="address" />
                     </div>
                   </div>
                   <hr>
                   <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">CV</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      Resume.pdf
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <button class="btn btn-info " @click="edit">Edit</button>
+                    <div id="button-wrapper" class="col-sm-12">
+                      <button id="btn-edit" class="btn btn-info " @click="save">Save</button>
                     </div>
                   </div>
                 </div>
@@ -133,25 +130,9 @@
                   <div class="card h-100">
                     <div class="card-body">
                       <h2 class="d-flex align-items-center mb-3">Job Alerts</h2>
-                      <small>Web Design</small>
-                      <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <small>Website Markup</small>
-                      <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <small>One Page</small>
-                      <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <small>Mobile Template</small>
-                      <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <small>Backend API</small>
-                      <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div>
+                        <small>Pentester</small>
+                        <p>3</p>
                       </div>
                     </div>
                   </div>
@@ -176,9 +157,55 @@ setup() {
   let isLoggedIn
   let email = auth.currentUser.email
   let data
+  let jobdata = ref(null)
+  let jobkeys = []
+  let jobids = []
+  let job1
 
   const edit = () => {
-    console.log('Button clicked')
+    let bw = document.getElementById('button-wrapper')
+    let fnw = document.getElementById('fullname-wrapper')
+    let idw = document.getElementById('idno-wrapper')
+    let ew = document.getElementById('email-wrapper')
+    let pnw = document.getElementById('phoneno-wrapper')
+    let aw = document.getElementById('address-wrapper')
+    /* let cvw = document.getElementById('cv-wrapper') */
+    console.log('Testung')
+    bw.innerHTML = `<button id="btn-edit" class="btn btn-info " onClick="edit()">Save</button>`
+    fnw.innerHTML = `<input type="text" id="fn" />`
+    idw.innerHTML = `<input type="number" id="id" />`
+    ew.innerHTML = `<input type="text" id="e" />`
+    pnw.innerHTML = `<input type="text" id="pn" />`
+    aw.innerHTML = `<input type="text" id="a" />`
+    /* cvw.innerHTML = `<input id="resume" />` */
+  }
+
+  const save = () => {
+    
+    const userData1 = {
+      phoneno: document.getElementById('phoneno').value,
+      address: document.getElementById('address').value
+    }
+
+    for (let key in data) {
+      if (String(data[key].email) == String(email)) {
+        data[key].phoneno = userData1.phoneno
+        data[key].address = userData1.address
+
+        axios.put('https://cybershield-24f97-default-rtdb.firebaseio.com/userdata.json', data)
+        .then((response) => {
+          console.log(response)
+          window.location.reload()
+        })
+        .catch((error) => {
+          console.log(error)
+          alert(error.message)
+          window.location.reload()
+        })
+        console.log(data[key])
+        break
+      }
+    }
   }
 
   axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/userdata.json')
@@ -200,8 +227,8 @@ setup() {
           document.getElementById('fullname1').textContent = userData.fullname
           document.getElementById('idno').textContent = userData.idno
           document.getElementById('email').textContent = userData.email
-          document.getElementById('phoneno').textContent = userData.phoneno
-          document.getElementById('address').textContent = userData.address
+          document.getElementById('phoneno').value = userData.phoneno
+          document.getElementById('address').value = userData.address
           document.getElementById('address1').textContent = userData.address
           break
         }
@@ -211,20 +238,53 @@ setup() {
       console.log(error)
     })
 
-  onMounted(() => {
-    
-    
-    
-      if (auth) {
-        isLoggedIn = true
+    axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/jobs.json')
+    .then((response) => {
+      jobdata.value = response.data
+      for (let key in jobdata.value) {
+        jobkeys.push(key)
+        jobids.push(jobdata.value[key].jobid)
       }
-      else {
-        isLoggedIn = false
-      }
-    /* console.log(isLoggedIn, email, auth.currentUser.email) */
-  })
+      console.log(jobkeys[0], "Check here", jobdata.value[jobkeys[0]].title)
+    })
+    .catch((error) => {
+      alert(error.message)
+      console.log(error)
+    })
 
-  return { auth, isLoggedIn, userData, data, edit }
+
+
+  onMounted(() => {
+    if (auth) {
+      isLoggedIn = true
+    }
+    else {
+      isLoggedIn = false
+    }
+
+    axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/applications.json')
+    .then((response) => {
+      const appdata = response.data
+        for (let jobkey in jobdata.value) {
+          console.log(jobdata.value[jobkey].id, 'First for')
+          for( let appkey in appdata) {
+            console.log(appdata[appkey].jobid, 'Second for')
+            if (appdata[appkey].jobid == jobdata.value[jobkey].id) {
+              jobdata.value[jobkey].applicants += 1
+              console.log(jobdata.value[jobkey].title, jobdata.value[jobkey].applicants, 'found')
+              continue
+            }
+          }
+        }
+    })
+    .catch((error) => {
+      console.log(error)
+      alert(error.message)
+    })
+  })
+  console.log(jobdata.value, "See me")
+
+  return { auth, isLoggedIn, userData, data, edit, save, jobdata, jobkeys, job1 }
 }
 }
 </script>

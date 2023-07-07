@@ -2,41 +2,33 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 text-center mb-5">
-                <h2 class="heading-section">User Management</h2>
+                <h2 class="heading-section">Contact Forms</h2>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="table-wrap">
-                    <table class="table table-dark" id="usersTable">
+                    <table class="table table-dark" id="contactformsTable">
                         <thead>
                             <tr class="bg-dark">
-                                <th>User ID</th>
-                                <th>Name</th>
-                                <th>ID No.</th>
                                 <th>Email</th>
+                                <th>Full Name</th>
                                 <th>Phone No.</th>
-                                <th>Address</th>
-                                <th>Gender</th>
-                                <th>&nbsp;</th>
+                                <th>Message</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-primary" v-for="user in users" :key="user.userid">
-                                <th scope="row">{{ user.userid }}</th>
-                                <td>{{ user.fullname }}</td>
-                                <td>{{ user.idno }}</td>
-                                <td>{{ user.email }}</td>
-                                <th>{{ user.phoneno }}</th>
-                                <th>{{ user.address }}</th>
-                                <th>{{ user.gender }}</th>
-                                <td><a href="#"><i class="fa fa-edit"></i></a></td>
+                            <tr class="bg-primary" v-for="form in forms" :key="form.email">
+                                <th scope="row">{{ form.email }}</th>
+                                <td>{{ form.name }}</td>
+                                <td>{{ form.phone }}</td>
+                                <td>{{ form.message }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="btn-wrapper">
-                  <button @click="printUsers" class="btn-lo">Print Users</button>
+                  <button @click="printContactforms" class="btn-lo">Print ContactForms</button>
                 </div>
             </div>
         </div>
@@ -44,54 +36,49 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { ref } from 'vue'
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
-import { onMounted, ref } from 'vue'
-import axios from 'axios'
 
 export default {
-name: 'Users',
-setup() {
-  const users = ref([])
-  onMounted(() => {
-    axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/userdata.json')
-    .then(response => {
-      const data = response.data;
-      console.log(data)
-      const keyValuePairs = [];
-      for (let key in data) {
-        if (data.hasOwnProperty(key)) {
-          const nestedObject = data[key];
-          const formattedObject = {};
+    name: 'ContactForms',
+    setup() {
+        const forms = ref([])
+        axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/contactforms.json')
+        .then((response) => {
+            const data = response.data
+            const keyValuePairs = [];
+            for (let key in data) {
+                if (data.hasOwnProperty(key)) {
+                const nestedObject = data[key];
+                const formattedObject = {};
 
-          for (let nestedKey in nestedObject) {
-            if (nestedObject.hasOwnProperty(nestedKey)) {
-              const value = nestedObject[nestedKey];
-              formattedObject[nestedKey] = value;
+                for (let nestedKey in nestedObject) {
+                    if (nestedObject.hasOwnProperty(nestedKey)) {
+                    const value = nestedObject[nestedKey]
+                    formattedObject[nestedKey] = value
+                    }
+                }
+
+                keyValuePairs.push(formattedObject)
+                }
             }
-          }
+            forms.value = keyValuePairs
+        })
+        .catch((error) => {
+            console.log(error)
+            alert(error.message, " : Error retrieving contactforms data")
+        })
 
-          keyValuePairs.push(formattedObject);
+        const printContactforms = () => {
+            const doc = new jsPDF()
+            doc.autoTable({ html: '#contactformsTable' })
+            doc.save('contactforms.pdf')
         }
-      }
-      users.value = keyValuePairs
-      console.log(users)
-      
-    })
-    .catch(error => {
-      console.log(error)
-      alert(error.message)
-    });
-  })
 
-  const printUsers = () => {
-    const doc = new jsPDF()
-    doc.autoTable({ html: '#usersTable' })
-    doc.save('users.pdf')
-  }
-
-  return { printUsers, users }
-}
+        return { forms, printContactforms }
+    }
 }
 </script>
 
