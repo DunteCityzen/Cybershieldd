@@ -16,7 +16,7 @@
                         </div>
                         <div class="mr-3">
                             <span class="fl-bigmug-line-portfolio23"></span>
-                            <router-link :to="{ name: 'JobDescription', params:{ id: job.id, title: job.title } }">view job detils.</router-link>
+                            <router-link :to="{ name: 'JobDescription', params:{ id: job.id, title: job.title } }">view job details.</router-link>
                         </div>
                     </div>
                 </div>

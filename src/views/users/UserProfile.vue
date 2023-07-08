@@ -130,9 +130,21 @@
                   <div class="card h-100">
                     <div class="card-body">
                       <h2 class="d-flex align-items-center mb-3">Job Alerts</h2>
-                      <div>
-                        <small>Pentester</small>
-                        <p>3</p>
+                      <div id="job1">
+                        <small id="job1-title">Pentester</small>
+                        <p id="job1-applicants">applicants: </p>
+                      </div>
+                      <div id="job2">
+                        <small id="job2-title">Pentester</small>
+                        <p id="job2-applicants">applicants: </p>
+                      </div>
+                      <div id="job3">
+                        <small id="job3-title">Pentester</small>
+                        <p id="job3-applicants">applicants: </p>
+                      </div>
+                      <div id="job4">
+                        <small id="job4-title">Pentester</small>
+                        <p id="job4-applicants">applicants: </p>
                       </div>
                     </div>
                   </div>
@@ -146,7 +158,7 @@
 
 <script>
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import axios from 'axios'
 
 export default {
@@ -157,28 +169,26 @@ setup() {
   let isLoggedIn
   let email = auth.currentUser.email
   let data
-  let jobdata = ref(null)
+  let jobdata
   let jobkeys = []
   let jobids = []
-  let job1
 
   const edit = () => {
-    let bw = document.getElementById('button-wrapper')
-    let fnw = document.getElementById('fullname-wrapper')
-    let idw = document.getElementById('idno-wrapper')
-    let ew = document.getElementById('email-wrapper')
-    let pnw = document.getElementById('phoneno-wrapper')
-    let aw = document.getElementById('address-wrapper')
-    /* let cvw = document.getElementById('cv-wrapper') */
-    console.log('Testung')
-    bw.innerHTML = `<button id="btn-edit" class="btn btn-info " onClick="edit()">Save</button>`
-    fnw.innerHTML = `<input type="text" id="fn" />`
-    idw.innerHTML = `<input type="number" id="id" />`
-    ew.innerHTML = `<input type="text" id="e" />`
-    pnw.innerHTML = `<input type="text" id="pn" />`
-    aw.innerHTML = `<input type="text" id="a" />`
-    /* cvw.innerHTML = `<input id="resume" />` */
+    
   }
+
+  axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/jobs.json')
+    .then((response) => {
+      jobdata = response.data
+      for (let key in jobdata) {
+        jobkeys.push(key)
+        jobids.push(jobdata[key].jobid)
+      }
+    })
+    .catch((error) => {
+      alert(error.message, "while fetching jobs")
+      console.log(error)
+    })
 
   const save = () => {
     
@@ -199,10 +209,9 @@ setup() {
         })
         .catch((error) => {
           console.log(error)
-          alert(error.message)
+          alert(error.message, "axios putting into userdata")
           window.location.reload()
         })
-        console.log(data[key])
         break
       }
     }
@@ -212,8 +221,6 @@ setup() {
     .then(response => {
       data = response.data
       for (let key in data) {
-        console.log(email, 'from auth.currentUser')
-        console.log(data[key].email, 'from axios fetch')
         if (String(data[key].email) == String(email)) {
           userData = {
             fullname: data[key].fullname,
@@ -222,7 +229,6 @@ setup() {
             phoneno: data[key].phoneno,
             address: data[key].address
           }
-          console.log(userData)
           document.getElementById('fullname').textContent = userData.fullname
           document.getElementById('fullname1').textContent = userData.fullname
           document.getElementById('idno').textContent = userData.idno
@@ -236,23 +242,8 @@ setup() {
     })
     .catch(error => {
       console.log(error)
-    })
-
-    axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/jobs.json')
-    .then((response) => {
-      jobdata.value = response.data
-      for (let key in jobdata.value) {
-        jobkeys.push(key)
-        jobids.push(jobdata.value[key].jobid)
-      }
-      console.log(jobkeys[0], "Check here", jobdata.value[jobkeys[0]].title)
-    })
-    .catch((error) => {
       alert(error.message)
-      console.log(error)
     })
-
-
 
   onMounted(() => {
     if (auth) {
@@ -262,29 +253,38 @@ setup() {
       isLoggedIn = false
     }
 
+    
+
     axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/applications.json')
     .then((response) => {
       const appdata = response.data
-        for (let jobkey in jobdata.value) {
-          console.log(jobdata.value[jobkey].id, 'First for')
+        for (let jobkey in jobdata) {
           for( let appkey in appdata) {
-            console.log(appdata[appkey].jobid, 'Second for')
-            if (appdata[appkey].jobid == jobdata.value[jobkey].id) {
-              jobdata.value[jobkey].applicants += 1
-              console.log(jobdata.value[jobkey].title, jobdata.value[jobkey].applicants, 'found')
+            if (appdata[appkey].jobid == jobdata[jobkey].id) {
+              jobdata[jobkey].applicants += 1
               continue
             }
           }
         }
+        document.getElementById('job1-title').textContent = jobdata[jobkeys[0]].title + ' - ' + jobdata[jobkeys[3]].type
+        document.getElementById('job1-applicants').textContent += jobdata[jobkeys[0]].applicants
+
+        document.getElementById('job2-title').textContent = jobdata[jobkeys[1]].title + ' - ' + jobdata[jobkeys[3]].type
+        document.getElementById('job2-applicants').textContent += jobdata[jobkeys[1]].applicants
+
+        document.getElementById('job3-title').textContent = jobdata[jobkeys[2]].title + ' - ' + jobdata[jobkeys[3]].type
+        document.getElementById('job3-applicants').textContent += jobdata[jobkeys[2]].applicants
+
+        document.getElementById('job4-title').textContent = jobdata[jobkeys[3]].title + ' - ' + jobdata[jobkeys[3]].type
+        document.getElementById('job4-applicants').textContent += jobdata[jobkeys[3]].applicants
     })
     .catch((error) => {
       console.log(error)
       alert(error.message)
     })
   })
-  console.log(jobdata.value, "See me")
 
-  return { auth, isLoggedIn, userData, data, edit, save, jobdata, jobkeys, job1 }
+  return { auth, isLoggedIn, userData, data, edit, save, jobdata, jobkeys }
 }
 }
 </script>

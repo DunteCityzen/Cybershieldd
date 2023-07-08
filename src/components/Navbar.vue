@@ -6,12 +6,12 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
                     <li class="nav-item"><router-link :to="{ name: 'Home' }" class="nav-link">Home</router-link></li>
-                    <li class="nav-item" v-if="auth.currentUser == null"><router-link :to="{ name: 'Login' }" class="nav-link">Login/Register</router-link></li>
-                    <li class="nav-item" v-if="auth.currentUser == !null"><router-link :to="{ name: 'UserProfile' }" class="nav-link">My Profile</router-link></li>
+                    <li class="nav-item" v-if="!auth"><router-link :to="{ name: 'Login' }" class="nav-link">Login/Register</router-link></li>
+                    <li class="nav-item" v-if="auth"><router-link :to="{ name: 'UserProfile' }" class="nav-link">My Profile</router-link></li>
                     <li class="nav-item"><router-link :to="{ name: 'Jobs' }" class="nav-link">Jobs</router-link></li>
                     <li class="nav-item"><router-link :to="{ name: 'Contact' }" class="nav-link">Contact us</router-link></li>
                 </ul>
-                <div class="btn-logout" v-if="auth.currentUser == !null">
+                <div class="btn-logout" v-if="auth">
                     <button class="btn-lo" @click="logOut">Log Out</button>
                 </div>
             </div>
@@ -21,11 +21,15 @@
 
 <script>
 import { getAuth, signOut } from 'firebase/auth'
+import { onMounted, ref } from 'vue'
 
 export default {
     name: 'Navbar',
     setup() {
-        const auth = getAuth()
+        const auth = ref(null)
+        onMounted(() => {
+            auth.value = getAuth()
+        })
         const logOut = () => {
             signOut(auth)
         }

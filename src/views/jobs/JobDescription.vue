@@ -1,15 +1,19 @@
 <template>
   <div class="jobdesc-container">
-    <h1>{{ jobtitle }}</h1>
-    <h2>Job Description</h2>
-    <div class="description-wrap" id="description-wrapper">
-        Loading...
+    <div class="header-wrapper">
+        <h1 id="jobtitle">Jobtitle</h1>
+    </div>
+    <div class="description-container">
+        <h2>Job Description</h2>
+        <div class="description-wrap" id="description-wrapper">
+            Loading...
+        </div>
     </div>
   </div>
 </template>
 
 <script>
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 
@@ -22,18 +26,20 @@ setup() {
     let jobdescription
     let jobtitle
 
-    onMounted(() => {
-        const route = useRoute()
-        routeparams.value = route.params
-        document.getElementById('description-wrapper').innerHTML = jobdescription
-    })
+    const route = useRoute()
+    routeparams.value = route.params
+    console.log(routeparams.value)
+
     axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/jobs.json')
     .then((response) => {
         data = response.data
         for (let key in data) {
-            if (data[key].jobid == routeparams.value.id) {
+            if (data[key].id == routeparams.value.id) {
                 jobdescription = data[key].description
                 jobtitle = data[key].title
+                console.log(jobdescription)
+                document.getElementById('jobtitle').textContent = jobtitle
+                document.getElementById('description-wrapper').innerHTML = jobdescription
                 break
             }
         }
@@ -49,5 +55,12 @@ setup() {
     padding: 25px 25px;
     margin: 25px 25px;
     color: coral;
+    margin-top: 5%;
+}
+
+.description-container {
+    color: black;
+    margin-top: 3%;
+    text-align: left;
 }
 </style>

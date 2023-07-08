@@ -67,12 +67,13 @@ export default {
         if (auth.currentUser) {
             axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/userdata.json')
             .then((response) => {
-                userdata = response.data
+                const userdata = response.data
+                console.log(userdata)
                 for(let key in userdata) {
                     if(auth.currentUser.email == userdata[key].email) {
-                        nameEl.value = userdata[key].fullname
-                        emailEl.value = userdata[key].email
-                        phoneEl.value = userdata[key].phoneno
+                        document.getElementById('name').value = userdata[key].fullname
+                        document.getElementById('email').value = userdata[key].email
+                        document.getElementById('phone').value = userdata[key].phoneno
                         break
                     }
                 }

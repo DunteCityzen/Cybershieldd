@@ -22,12 +22,15 @@
 
 <script>
 import { getAuth, signOut } from 'firebase/auth'
+import { useRouter } from 'vue-router'
 export default {
 name: 'AdminNavbar',
 setup() {
   const auth = getAuth()
+  const route = useRouter()
   const logout = () => {
     signOut(auth)
+    route.push('/')
   }
 
   return { logout, auth }
