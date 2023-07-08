@@ -6,13 +6,13 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
                     <li class="nav-item"><router-link :to="{ name: 'Home' }" class="nav-link">Home</router-link></li>
-                    <li class="nav-item" v-if="!auth"><router-link :to="{ name: 'Login' }" class="nav-link">Login/Register</router-link></li>
-                    <li class="nav-item" v-if="auth"><router-link :to="{ name: 'UserProfile' }" class="nav-link">My Profile</router-link></li>
+                    <li class="nav-item" v-if="user == null"><router-link :to="{ name: 'Login' }" class="nav-link">Login/Register</router-link></li>
+                    <li class="nav-item" v-if="user != null"><router-link :to="{ name: 'UserProfile' }" class="nav-link">My Profile</router-link></li>
                     <li class="nav-item"><router-link :to="{ name: 'Jobs' }" class="nav-link">Jobs</router-link></li>
                     <li class="nav-item"><router-link :to="{ name: 'Contact' }" class="nav-link">Contact us</router-link></li>
                 </ul>
-                <div class="btn-logout" v-if="auth">
-                    <button class="btn-lo" @click="logOut">Log Out</button>
+                <div class="btn-logout">
+                    <button v-if="user != null" class="btn-lo" @click="logOut">Log Out</button>
                 </div>
             </div>
         </div>
@@ -20,21 +20,44 @@
 </template>
 
 <script>
-import { getAuth, signOut } from 'firebase/auth'
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
     name: 'Navbar',
     setup() {
-        const auth = ref(null)
-        onMounted(() => {
-            auth.value = getAuth()
-        })
-        const logOut = () => {
-            signOut(auth)
+        const user = ref(null)
+        const router = useRouter()
+        /* let isLoggedin = ref(false) */
+        /* auth.value = getAuth() */
+        
+        const getCurrentUser = () => {
+            return new Promise((resolve, reject) => {
+                const auth = getAuth();
+                const unsubscribe = onAuthStateChanged(auth, (user) => {
+                unsubscribe()
+                resolve(user)
+                }, reject)
+            })
         }
 
-        return { auth, logOut }
+        onMounted( async () => {
+            user.value = await getCurrentUser()
+            console.log(user.value, "from getcurrentuser")
+        })
+        
+        /* if (auth.value.currentUser != null) {
+            isLoggedin = true
+            console.log(isLoggedin)
+        } */
+
+        const logOut = () => {
+            /* signOut(auth.value) */
+            router.push('/login')
+        }
+
+        return { logOut, user }
     }
 }
 </script>

@@ -64,11 +64,10 @@ export default {
         let phoneEl = document.getElementById('phone')
         let messageEl = document.getElementById('message')
         
-        if (auth.currentUser) {
+        if (auth) {
             axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/userdata.json')
             .then((response) => {
                 const userdata = response.data
-                console.log(userdata)
                 for(let key in userdata) {
                     if(auth.currentUser.email == userdata[key].email) {
                         document.getElementById('name').value = userdata[key].fullname
