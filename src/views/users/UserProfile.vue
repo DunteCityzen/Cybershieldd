@@ -5,8 +5,8 @@
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">User</a></li>
               <li class="breadcrumb-item active" aria-current="page">User Profile</li>
             </ol>
           </nav>
@@ -228,8 +228,6 @@ setup() {
     else {
       isLoggedIn = false
     }
-
-    
 
     axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/applications.json')
     .then((response) => {

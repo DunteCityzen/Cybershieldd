@@ -53,9 +53,12 @@ export default {
         } */
 
         const logOut = () => {
-            /* signOut(auth.value) */
+            const auth = getAuth()
+            signOut(auth)
+            user.value = null
             router.push('/login')
         }
+
 
         return { logOut, user }
     }
