@@ -24,6 +24,8 @@ export default {
       switch(currentRoute) {
         case 'JobApplications':
           return AdminNavbar
+        case 'ApplicantCV':
+          return AdminNavbar
         case 'JobManagement':
           return AdminNavbar
         case 'UserManagement':

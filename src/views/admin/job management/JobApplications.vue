@@ -11,22 +11,24 @@
                     <table class="table table-dark" id="jobapplicationsTable">
                         <thead>
                             <tr class="bg-dark">
-                                <th>Job ID</th>
-                                <th>Applicant ID</th>
-                                <th>Applicant Name</th>
-                                <th>Message</th>
-                                <th>Date</th>
-                                <th>&nbsp;</th>
+                              <th>Application ID</th>
+                              <th>Job ID</th>
+                              <th>Applicant ID</th>
+                              <th>Applicant Name</th>
+                              <th>Message</th>
+                              <th>Date</th>
+                              <th>&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="bg-primary" v-for="application in applications" :key="application.jobid">
-                                <th scope="row">{{ application.jobid }}</th>
+                                <th scope="row">{{ application.applicationid }}</th>
+                                <td>{{ application.jobid }}</td>
                                 <td>{{ application.idno }}</td>
                                 <td>{{ application.fullname }}</td>
                                 <td>{{ application.message }}</td>
                                 <td>{{ application.date }}</td>
-                                <td><a href="#"><i class="fa fa-edit"></i></a></td>
+                                <td><router-link :to="{ name: 'ApplicantCV', params: { applicationid: application.applicationid } }">View CV</router-link></td>
                             </tr>
                         </tbody>
                     </table>
@@ -46,6 +48,7 @@ import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 
 export default {
+name: 'JobApplication',
 setup() {
   const applications = ref([])
   onMounted(() => {

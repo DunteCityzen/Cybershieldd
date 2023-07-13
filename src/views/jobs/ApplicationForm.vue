@@ -78,8 +78,24 @@ export default {
         let routeParams = {}
         let jobid = null
         let fileData = {}
+        const data = ref(null)
+        let appIDs = []
+        const recentappid = ref(null)
         let uploadFileElement = document.getElementById("file")
         
+        axios.get('https://cybershield-24f97-default-rtdb.firebaseio.com/applications.json')
+        .then((response) => {
+            data.value = response.data
+            for( let key in data.value) {
+                appIDs.push(data.value[key].applicationid)
+            }
+            recentappid.value = Math.max(...appIDs)
+        })
+        .catch((error) => {
+            alert(error.message)
+            console.log(error)
+        })
+
         const applyJob = () => {
             jobid = routeParams.value.id
             let unformateddate = new Date()
@@ -90,6 +106,7 @@ export default {
             let phoneno = document.getElementById('phoneno').value
             let message = document.getElementById('message').value
             const appData = {
+                applicationid: recentappid.value + 1,
                 jobid: jobid,
                 date: date,
                 fullname: fullname,

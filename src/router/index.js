@@ -15,6 +15,7 @@ import RemoveJob from '../views/admin/job management/RemoveJob'
 import AdminDashboard from '../views/admin/AdminDashboard'
 import UserProfile from '../views/users/UserProfile'
 import JobApplications from '../views/admin/job management/JobApplications'
+import ApplicantCV from '../views/admin/job management/ApplicantCV'
 import UserManagement from '../views/admin/user management/UserManagement'
 import Users from '../views/admin/user management/Users'
 import RemoveUser from '../views/admin/user management/RemoveUser'
@@ -81,6 +82,7 @@ const routes = [
     },
     children: [
       { path: '', name: 'JobApplications', component: JobApplications, meta: { isAdmin: true } },
+      { path: '/jobapplications/:applicationid/cv', name: 'ApplicantCV', component: ApplicantCV, props: true, meta: { isAdmin: true } },
       { path: 'jobmanagement', name: 'JobManagement', component: JobManagement, meta: { isAdmin: true }, children: [ { path: 'addjob', name: 'AddJob', component: AddJob, meta: { isAdmin: true } }, { path: 'removejob', name: 'RemoveJob', component: RemoveJob, meta: { isAdmin: true } } ] },
       { path: 'usermanagement', name: 'UserManagement', component: UserManagement, meta: { isAdmin: true }, children: [ { path: '', name: 'Users', component: Users, meta: { isAdmin: true } }, { path: 'removeuser', name: 'RemoveUser', component: RemoveUser, meta: { isAdmin: true } } ] }
     ]
